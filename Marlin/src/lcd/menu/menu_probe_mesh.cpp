@@ -45,6 +45,8 @@ static uint8_t manual_probe_index;
 static xy_int8_t meshCount;
 xy_pos_t probePos;
 static constexpr xy_uint8_t grid_points = {GRID_MAX_POINTS_X, GRID_MAX_POINTS_Y};
+bool zig;
+
 #if ABL_USES_GRID
 #if ENABLED(PROBE_Y_FIRST)
 #define PR_OUTER_VAR meshCount.x
@@ -210,11 +212,17 @@ void _lcd_probe_offset_mesh_homing_done()
   }
   if (ui.use_click())
   {
+    
+    // Initialize grid variables in case they are not initialized yet
+    if (bilinear_grid_spacing.x == 0 && bilinear_grid_spacing.y == 0){
+      bilinear_grid_spacing.set((probe.max_x() - probe.min_x()) / (grid_points.x - 1),
+                                (probe.max_y() - probe.min_y()) / (grid_points.y - 1));
+      bilinear_start.set(probe.min_x(), probe.min_y());
+    }
+
+    zig = PR_OUTER_SIZE & 1; // Always end at RIGHT and BACK_PROBE_BED_POSITION
     manual_probe_index = 0;
     _lcd_level_goto_next_point();
-    if (bilinear_grid_spacing.x == 0 && bilinear_grid_spacing.y == 0){
-      
-    }
   }
 }
 
