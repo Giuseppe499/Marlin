@@ -209,7 +209,7 @@ void reset_bed_level() {
 
 #endif // AUTO_BED_LEVELING_BILINEAR || MESH_BED_LEVELING
 
-#if EITHER(MESH_BED_LEVELING, PROBE_MANUALLY)
+#if ANY(MESH_BED_LEVELING, PROBE_MANUALLY, PROBE_OFFSET_MESH)
 
   void _manual_goto_xy(const xy_pos_t &pos) {
 

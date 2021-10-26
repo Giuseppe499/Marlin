@@ -1235,6 +1235,11 @@
       // Set a convenient position to do the calibration (probing point and nozzle/bed-distance)
       #define PROBE_OFFSET_WIZARD_XY_POS { X_CENTER, Y_CENTER }
     #endif
+
+    #if ENABLED(AUTO_BED_LEVELING_BILINEAR)
+      //Enable to use a mesh for the Z-offset to probe instead of a fixed Z-offset
+      #define PROBE_OFFSET_MESH
+    #endif
   #endif
 
   // Include a page of printer information in the LCD Main Menu
